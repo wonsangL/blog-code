@@ -1,6 +1,5 @@
-package com.example.hikaricp.chapter02;
+package com.example.hikaricp.chapter00;
 
-import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
