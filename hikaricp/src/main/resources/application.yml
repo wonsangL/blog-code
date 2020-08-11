@@ -1,15 +1,13 @@
 #chapter01
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/hikari?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/hikari?serverTimezone=UTC
     username: root
     password: mysqlpassword
-
-#chapter??
-spring.datasource.hikari:
-  register-mbeans: true
-  pool-name: hikari
+    register-mbeans: true
+    pool-name: hikari
+    minimum-idle: 0
 
 spring.jmx.enabled: true
 
