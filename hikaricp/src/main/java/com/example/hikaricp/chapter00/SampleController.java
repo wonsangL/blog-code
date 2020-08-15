@@ -1,13 +1,14 @@
 package com.example.hikaricp.chapter00;
 
-import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,11 +17,12 @@ import java.sql.SQLException;
 @RestController("chapter02")
 @RequestMapping("/chapter02")
 public class SampleController {
-    private HikariDataSource dataSource;
+    @Qualifier("sampleDatasource")
+    private DataSource dataSource;
 
     private HikariPoolMXBean poolMXBean;
 
-    public SampleController(HikariDataSource dataSource, HikariPoolMXBean poolMXBean) {
+    public SampleController(DataSource dataSource, HikariPoolMXBean poolMXBean) {
         this.dataSource = dataSource;
         this.poolMXBean = poolMXBean;
     }
