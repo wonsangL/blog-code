@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class User {
     @NotBlank
-    @NoSpecialCharacter
+    @NoSpecialCharacter(payload = SamplePayload.class)
     private String name;
 
     private int age;
