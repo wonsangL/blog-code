@@ -18,17 +18,34 @@ public class SampleService {
     public Player getAdultPlayer(int id) throws InterruptedException, ExecutionException {
         Player player = playerRepository.findByIdWithDelay(id);
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        int age = player.getAge();
 
-        Future<Boolean> isAdult = executorService.submit(() -> {
-            Thread.sleep(5000);
-            return player.getAge() > 18;
-        });
+//        Future<Boolean> isAdult = isAdultAsync(age);
+//
+//        Thread.sleep(5000);
+//
+//        if (isAdult.get()) {
+//            return player;
+//        }
 
-        if (isAdult.get()) {
+        if (isAdultSync(age)) {
             return player;
         }
 
         return null;
+    }
+
+    private boolean isAdultSync(int age) throws InterruptedException {
+        Thread.sleep(3000);
+        return age > 18;
+    }
+
+    private Future<Boolean> isAdultAsync(int age) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        return executorService.submit(() -> {
+            Thread.sleep(3000);
+            return age > 18;
+        });
     }
 }
