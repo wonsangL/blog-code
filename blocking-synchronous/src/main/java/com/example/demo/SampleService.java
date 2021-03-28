@@ -4,6 +4,7 @@ import com.example.demo.domain.Player;
 import com.example.demo.repo.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -15,30 +16,19 @@ import java.util.concurrent.Future;
 public class SampleService {
     private final PlayerRepository playerRepository;
 
-    public Player getAdultPlayer(int id) throws InterruptedException, ExecutionException {
-        Player player = playerRepository.findByIdWithDelay(id);
+    public Player getAdultPlayer(String name, int age) {
+        Future<Boolean> isAdult = isAdultAsync(age);
 
-        int age = player.getAge();
+        Mono<Player> playerMono = playerRepository.findAllByNameAndAgeWithDelay(name, age);
 
-//        Future<Boolean> isAdult = isAdultAsync(age);
-//
-//        Thread.sleep(5000);
-//
-//        if (isAdult.get()) {
-//            return player;
-//        }
-
-        if (isAdultSync(age)) {
-            return player;
-        }
-
-        return null;
+        return playerMono.block();
     }
 
     private boolean isAdultSync(int age) throws InterruptedException {
         Thread.sleep(3000);
         return age > 18;
     }
+
 
     private Future<Boolean> isAdultAsync(int age) {
         ExecutorService executorService = Executors.newSingleThreadExecutor();

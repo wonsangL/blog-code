@@ -12,7 +12,7 @@ public class SampleController {
     private final SampleService sampleService;
 
     @GetMapping("/player")
-    public Player getPlayerWithId(@RequestParam int id) throws Exception {
-        return sampleService.getAdultPlayer(id);
+    public Player getPlayerWithId(@RequestParam String name, int age) throws Exception {
+        return sampleService.getAdultPlayer(name, age);
     }
 }
